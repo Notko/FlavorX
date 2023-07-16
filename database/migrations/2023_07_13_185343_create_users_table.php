@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('pictureUri');
             $table->string('firstName');
-            $table->string('surname');
+            $table->string('lastName');
             $table->string('email');
             $table->string('password');
             $table->timestamps();
