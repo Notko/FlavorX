@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         $faker = Factory::create();
         for ($i = 0; $i < 20; $i++){
             User::create([
-                'picture_uri' => $faker->imageUrl,
+                'picture_uri' => $faker->imageUrl(128, 128),
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
