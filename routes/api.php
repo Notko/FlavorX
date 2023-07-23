@@ -14,7 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// POST Routes
 Route::post('/user/create', [UserController::class, 'add']);
 Route::post('/user/login', [UserController::class, 'login']);
 
+// GET Routes
 Route::get('/user/{id}', [UserController::class, 'get']);
+
+// PUT Routes
+
+// PATCH Routes
+
+// DELETE Routes
