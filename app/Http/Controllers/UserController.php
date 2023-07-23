@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,7 @@ class UserController extends Controller
      * Add new user
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function add(Request $request)
     {
@@ -81,7 +82,7 @@ class UserController extends Controller
      * Login user and return JWT
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function login(Request $request)
     {
@@ -115,5 +116,27 @@ class UserController extends Controller
                 'type' => 'Bearer',
             ]
         ], 200);
+    }
+
+    /**
+     * Get user by id
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function get(Request $request)
+    {
+        $userId = $request->route('id');
+        $user = User::find($userId);
+
+        if ($user) {
+            return response()->json([
+                'data' => $user,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
     }
 }
