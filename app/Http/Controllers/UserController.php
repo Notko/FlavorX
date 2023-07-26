@@ -139,4 +139,53 @@ class UserController extends Controller
             ], 404);
         }
     }
+
+    /**
+     * Update user by id
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(Request $request)
+    {
+        $userId = $request->id;
+        if (Auth::id() !== $userId) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        $user = User::find($userId);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        $request->validate([
+            'first_name' => 'nullable|between:2,32',
+            'last_name' => 'nullable|between:2,32',
+            'email' => 'nullable|unique:users|email',
+            'password' => 'nullable|confirmed|min:8',
+        ], [
+            'first_name.between' => 'First name must be between 2-32 characters',
+            'last_name.between' => 'Last name must be between 2-32 characters',
+            'email.unique' => 'User with this e-mail already exists',
+            'email.email' => 'E-mail is invalid',
+            'password.confirmed' => 'Passwords must match',
+            'password.min' => 'Password must be at least 8 characters long',
+        ]);
+
+        $user->fill($request->only(['first_name', 'last_name', 'email']));
+
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'User updated successfully',
+        ], 200);
+    }
 }
