@@ -27,3 +27,4 @@ Route::get('/user/{id}', [UserController::class, 'get']);
 Route::middleware('auth:api')->patch('/user/update', [UserController::class, 'update']);
 
 // DELETE Routes
+Route::middleware('auth:api')->delete('/user/delete', [UserController::class, 'delete']);
