@@ -24,6 +24,8 @@ Route::middleware('auth:api')->post('/recipe/new', [RecipeController::class, 'ad
 // GET Routes
 Route::get('/user/{id}', [UserController::class, 'get']);
 
+Route::get('/recipe/{id}', [RecipeController::class, 'get']);
+
 // PUT Routes
 
 // PATCH Routes
