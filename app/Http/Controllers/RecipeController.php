@@ -83,4 +83,25 @@ class RecipeController extends Controller
             );
         }
     }
+
+    /**
+     * Get recipe by id
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function get(Request $request){
+        $recipeId = $request->route('id');
+        $recipe = Recipe::find($recipeId);
+
+        if ($recipe) {
+            return response()->json([
+                'data' => $recipe,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Recipe not found',
+            ], 404);
+        }
+    }
 }
