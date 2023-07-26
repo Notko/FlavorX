@@ -24,5 +24,6 @@ Route::get('/user/{id}', [UserController::class, 'get']);
 // PUT Routes
 
 // PATCH Routes
+Route::middleware('auth:api')->patch('/user/update', [UserController::class, 'update']);
 
 // DELETE Routes
