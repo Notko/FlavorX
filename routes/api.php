@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 // POST Routes
 Route::post('/user/create', [UserController::class, 'add']);
 Route::post('/user/login', [UserController::class, 'login']);
+
+Route::middleware('auth:api')->post('/recipe/new', [RecipeController::class, 'add']);
 
 // GET Routes
 Route::get('/user/{id}', [UserController::class, 'get']);
