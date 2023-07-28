@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
@@ -22,6 +23,8 @@ Route::post('/user/login', [UserController::class, 'login']);
 
 Route::middleware('auth:api')->post('/recipe/new', [RecipeController::class, 'add']);
 Route::middleware('auth:api')->post('/recipe/like', [LikeController::class, 'add']);
+
+Route::middleware('auth:api')->post('/comment/add', [CommentController::class, 'add']);
 
 // GET Routes
 Route::get('/user/{id}', [UserController::class, 'get']);
