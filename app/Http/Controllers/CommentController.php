@@ -104,4 +104,26 @@ class CommentController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Get all comments for a recipe
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAllByID(Request $request)
+    {
+        $comments = Comment::where('recipe_id', $request->route('id'))->get();
+
+
+        if ($comments->isEmpty()) {
+            return response()->json([
+                "message" => 'Comments not found'
+            ], 404);
+        } else {
+            return response()->json([
+                "data" => $comments
+            ]);
+        }
+    }
 }
