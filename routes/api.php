@@ -32,6 +32,7 @@ Route::get('/recipes', [RecipeController::class, 'getAll']); //?limit=10&offset=
 
 // PATCH Routes
 Route::middleware('auth:api')->patch('/user/update', [UserController::class, 'update']);
+Route::middleware('auth:api')->patch('/recipe/update', [RecipeController::class, 'update']);
 
 // DELETE Routes
 Route::middleware('auth:api')->delete('/user/delete', [UserController::class, 'delete']);
