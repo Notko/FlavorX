@@ -22,7 +22,8 @@ class LikeController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function add(Request $request){
+    public function add(Request $request)
+    {
         $request->validate([
             'recipe_id' => 'required|numeric'
         ], [
@@ -74,5 +75,36 @@ class LikeController extends Controller
                 201
             );
         }
+    }
+
+
+    /**
+     * Remove like by given recipe id
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'recipe_id' => 'required|numeric'
+        ], [
+            'recipe_id.required' => 'Recipe ID is required',
+            'recipe_id.numeric' => 'Recipe ID has to be numeric',
+        ]);
+
+        $recipeId = $request->recipe_id;
+        $userId = Auth::id();
+
+        $like = Like::where('user_id', $userId)->where('recipe_id', $recipeId)->first();
+        if (!$like) {
+            return response()->json([
+                'message' => 'Recipe like not found',
+            ], 404);
+        }
+
+        $like->delete();
+
+        return response()->json([], 204);
     }
 }
