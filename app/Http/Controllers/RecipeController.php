@@ -85,6 +85,53 @@ class RecipeController extends Controller
     }
 
     /**
+     * Update recipe by id
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(Request $request)
+    {
+        $recipeId = $request->recipe_id;
+
+        $recipe = Recipe::find($recipeId);
+        if (!$recipe) {
+            return response()->json([
+                'message' => 'Recipe not found',
+            ], 404);
+        }
+
+        if ($recipe->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        $request->validate([
+            'title' => 'nullable|between:2,128',
+            'description' => 'nullable|min:2|max:100000',
+            'ingredients' => 'nullable|min:2|max:100000',
+            'instructions' => 'nullable|min:2|max:100000',
+        ], [
+            'title.between' => 'Title must be between 2-128 characters',
+            'description.min' => 'Description must be at least 2 characters long',
+            'description.max' => 'Description must be at maximum 100000 characters long',
+            'ingredients.min' => 'Ingredients must be at least 2 characters long',
+            'ingredients.max' => 'Ingredients must be at maximum 100000 characters long',
+            'instructions.min' => 'Instructions must be at least 2 characters long',
+            'instructions.max' => 'Instructions must be at maximum 100000 characters long',
+        ]);
+
+        $recipe->fill($request->only(['title', 'description', 'ingredients', 'instructions']));
+
+        $recipe->save();
+
+        return response()->json([
+            'message' => 'Recipe updated successfully',
+        ], 200);
+    }
+
+    /**
      * Get recipe by id
      *
      * @param Request $request
