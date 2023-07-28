@@ -124,11 +124,15 @@ class RecipeController extends Controller
 
         $recipe->fill($request->only(['title', 'description', 'ingredients', 'instructions']));
 
-        $recipe->save();
-
-        return response()->json([
-            'message' => 'Recipe updated successfully',
-        ], 200);
+        if ($recipe->save()) {
+            return response()->json([
+                'message' => 'Recipe updated successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong',
+            ], 500);
+        }
     }
 
     /**

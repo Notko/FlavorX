@@ -182,11 +182,15 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        $user->save();
-
-        return response()->json([
-            'message' => 'User updated successfully',
-        ], 200);
+        if ($user->save()) {
+            return response()->json([
+                'message' => 'User updated successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong',
+            ], 500);
+        }
     }
 
     /**
