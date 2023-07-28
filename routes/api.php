@@ -30,6 +30,8 @@ Route::middleware('auth:api')->post('/comment/add', [CommentController::class, '
 Route::get('/user/{id}', [UserController::class, 'get']);
 
 Route::get('/recipe/{id}', [RecipeController::class, 'get']);
+Route::get('/recipe/{id}/comments', [CommentController::class, 'getAllByID']);
+
 Route::get('/recipes', [RecipeController::class, 'getAll']); //?limit=10&offset=0
 
 
