@@ -90,7 +90,8 @@ class RecipeController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function get(Request $request){
+    public function get(Request $request)
+    {
         $recipeId = $request->route('id');
         $recipe = Recipe::find($recipeId);
 
@@ -102,6 +103,36 @@ class RecipeController extends Controller
             return response()->json([
                 'message' => 'Recipe not found',
             ], 404);
+        }
+    }
+
+    /**
+     * Get all recipes
+     * Available queries: limit, offset, desc
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAll(Request $request)
+    {
+        $limit = $request->input('limit', 20);
+        $offset = $request->input('offset', 0);
+        $desc = filter_var($request->input('desc', false), FILTER_VALIDATE_BOOLEAN);
+
+        $recipes = Recipe::all()->sortBy('created_at', SORT_REGULAR, $desc)->skip($offset)->take($limit)->all();
+
+        if ($recipes) {
+            return response()->json(
+                [
+                    'data' => $recipes
+                ], 200
+            );
+        } else {
+            return response()->json(
+                [
+                    'message' => 'Recipes not found'
+                ], 404
+            );
         }
     }
 }
