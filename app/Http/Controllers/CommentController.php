@@ -115,7 +115,6 @@ class CommentController extends Controller
     {
         $comments = Comment::where('recipe_id', $request->route('id'))->get();
 
-
         if ($comments->isEmpty()) {
             return response()->json([
                 "message" => 'Comments not found'
