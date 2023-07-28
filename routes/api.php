@@ -25,6 +25,8 @@ Route::middleware('auth:api')->post('/recipe/new', [RecipeController::class, 'ad
 Route::get('/user/{id}', [UserController::class, 'get']);
 
 Route::get('/recipe/{id}', [RecipeController::class, 'get']);
+Route::get('/recipes', [RecipeController::class, 'getAll']); //?limit=10&offset=0
+
 
 // PUT Routes
 
