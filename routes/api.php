@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::post('/user/create', [UserController::class, 'add']);
 Route::post('/user/login', [UserController::class, 'login']);
 
 Route::middleware('auth:api')->post('/recipe/new', [RecipeController::class, 'add']);
+Route::middleware('auth:api')->post('/recipe/like', [LikeController::class, 'add']);
 
 // GET Routes
 Route::get('/user/{id}', [UserController::class, 'get']);
