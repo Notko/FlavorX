@@ -103,8 +103,13 @@ class LikeController extends Controller
             ], 404);
         }
 
-        $like->delete();
 
-        return response()->json([], 204);
+        if ($like->delete()) {
+            return response()->json([], 204);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
     }
 }
