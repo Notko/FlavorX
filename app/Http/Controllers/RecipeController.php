@@ -154,11 +154,13 @@ class RecipeController extends Controller
             ], 403);
         }
 
-        $recipe->delete();
-
-        return response()->json([
-            'message' => 'Recipe deleted successfully',
-        ], 200);
+        if ($recipe->delete()) {
+            return response()->json([], 204);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
     }
 
     /**

@@ -211,10 +211,12 @@ class UserController extends Controller
             ], 404);
         }
 
-        $user->delete();
-
-        return response()->json([
-            'message' => 'User deleted successfully',
-        ], 200);
+        if ($user->delete()) {
+            return response()->json([], 204);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
     }
 }
