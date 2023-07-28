@@ -36,3 +36,4 @@ Route::middleware('auth:api')->patch('/recipe/update', [RecipeController::class,
 
 // DELETE Routes
 Route::middleware('auth:api')->delete('/user/delete', [UserController::class, 'delete']);
+Route::middleware('auth:api')->delete('/recipe/delete', [RecipeController::class, 'delete']);
