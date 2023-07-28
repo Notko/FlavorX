@@ -132,6 +132,36 @@ class RecipeController extends Controller
     }
 
     /**
+     * Delete recipe by id
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function delete(Request $request)
+    {
+        $recipeId = $request->recipe_id;
+
+        $recipe = Recipe::find($recipeId);
+        if (!$recipe) {
+            return response()->json([
+                'message' => 'Recipe not found',
+            ], 404);
+        }
+
+        if ($recipe->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        $recipe->delete();
+
+        return response()->json([
+            'message' => 'Recipe deleted successfully',
+        ], 200);
+    }
+
+    /**
      * Get recipe by id
      *
      * @param Request $request
